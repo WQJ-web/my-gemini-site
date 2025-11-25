@@ -27,7 +27,7 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
   const prompt = `
   作为一个A股量化交易专家，请利用 Google Search 工具搜索 **今日** (如果今日休市，则搜索最近一个交易日) 的A股全市场复盘数据。
   
-  必须确保获取真实、准确的市场统计数据，而非模拟数据。
+  **最高指令：所有数据必须基于 Google Search 的实时结果，严禁编造数据！如果搜索不到具体数值，请填 "N/A" 或 0。**
   
   请重点搜索并提取以下数据：
   1. **市场核心数据**：
@@ -58,9 +58,10 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
      - 搜索离岸人民币汇率 (USD/CNH)。
      - 简述宏观环境对A股今日的影响。
 
-  6. **主力资金流向趋势**：
-     - 搜索并统计 **A股近3日** 和 **近5日** 主力资金净流入最多的行业板块。
-     - 分别列出前3-5个板块名称及大致净流入金额（如“20亿”）。
+  6. **主力资金流向趋势 (重点搜索)**：
+     - **请专门搜索 "东方财富网 行业板块资金流向" 或 "同花顺 资金流向" 的最新数据。**
+     - 统计 **近3日** 和 **近5日** 主力资金净流入最多的行业板块。
+     - 分别列出前3-5个板块名称及大致净流入金额（务必带上单位，如“20亿”）。
 
   搜索完成后，请**严格**按照以下两个部分输出：
 
@@ -163,12 +164,17 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
                 limitUpCount: 0,
                 limitDownCount: 0,
                 sentimentScore: 0,
-                sentimentDescription: "解析失败"
+                sentimentDescription: "AI 解析数据结构失败，请参考下方原始文本"
             },
             hotSectors: [],
             ladder: [],
             styleAnalysis: "未知",
-            aiSummary: text
+            aiSummary: text,
+            // Fallback for fundFlows to prevent UI errors
+            fundFlows: {
+                day3: [],
+                day5: []
+            }
          };
     }
 
