@@ -9,8 +9,10 @@ const getApiKey = (providedKey?: string): string => {
     const stored = localStorage.getItem('gemini_api_key');
     if (stored) return stored;
   }
-  // Try Environment variables (Vite/Node)
-  return process.env.API_KEY || (import.meta as any).env?.VITE_API_KEY || '';
+  
+  // Try Environment variables (Vite Standard)
+  // Fix: Removed process.env to prevent "Cannot find name 'process'" error during build
+  return (import.meta as any).env?.VITE_API_KEY || '';
 };
 
 export const fetchMarketReview = async (userApiKey?: string): Promise<APIResponse> => {
@@ -41,7 +43,7 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
   
   3. **连板天梯**：
      - 统计今日的最高连板高度。
-     - 列出各个连板梯队的代表个股。
+     - 列出各个连板梯队的代表个股，以及该梯队的**上涨核心逻辑/题材**。
 
   4. **市场风格量化与分析**：
      - 分析资金风格。
@@ -92,7 +94,7 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
       }
     ],
     "ladder": [
-      { "level": "5连板", "stocks": ["股票A", "股票B"] }
+      { "level": "5连板", "stocks": ["股票A", "股票B"], "reason": "并购重组" }
     ],
     "styleStats": [
       { "label": "权重蓝筹", "score": 40 },
@@ -113,7 +115,6 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
       contents: prompt,
       config: {
         tools: [{ googleSearch: {} }],
-        // responseMimeType is NOT allowed with search tools
       },
     });
 
