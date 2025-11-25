@@ -1,0 +1,5 @@
+{
+  "name": "A-Share Alpha Insight",
+  "description": "An AI-powered A-share (Chinese Stock Market) short-term trading review system. It utilizes Google Search Grounding to fetch daily market data, analyzing sentiment, hot sectors, consecutive limit-up ladders, and market styles.",
+  "requestFramePermissions": []
+}
