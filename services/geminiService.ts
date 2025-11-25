@@ -51,6 +51,12 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
        3. "连板接力" (纯情绪/高标/妖股)
        4. "微盘投机" (小市值/ST等)
 
+  5. **宏观外围行情**：
+     - 搜索隔夜美股收盘表现（纳斯达克、标普500、道琼斯、热门中概股）。
+     - 搜索当前大宗商品价格（COMEX黄金、原油）。
+     - 搜索离岸人民币汇率 (USD/CNH)。
+     - 简述宏观环境对A股今日的影响。
+
   搜索完成后，请**严格**按照以下两个部分输出：
 
   **第一部分：JSON数据块**
@@ -66,6 +72,14 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
       "limitDownCount": 5,
       "sentimentScore": 85,
       "sentimentDescription": "简短描述，如'放量大涨，情绪高潮'"
+    },
+    "macro": {
+        "summary": "一句话概括宏观影响，例如：美股大涨利好科技股，金价新高。",
+        "items": [
+            { "name": "纳斯达克", "price": "16300", "change": "+1.2%", "isUp": true },
+            { "name": "COMEX黄金", "price": "2350.5", "change": "+0.5%", "isUp": true },
+            { "name": "USD/CNH", "price": "7.25", "change": "-0.01%", "isUp": false }
+        ]
     },
     "hotSectors": [
       { 

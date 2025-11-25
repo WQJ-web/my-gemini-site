@@ -29,6 +29,18 @@ export interface StyleStat {
   score: number; // 0-100
 }
 
+export interface MacroItem {
+  name: string; // e.g. "纳斯达克", "COMEX黄金"
+  price: string; // e.g. "16300.5"
+  change: string; // e.g. "+1.25%" or "-0.5%"
+  isUp: boolean; // true for red (in CN context), false for green
+}
+
+export interface MacroData {
+  summary: string; // Brief summary of macro environment
+  items: MacroItem[];
+}
+
 export interface MarketData {
   date: string;
   sentiment: MarketSentiment;
@@ -37,6 +49,7 @@ export interface MarketData {
   styleAnalysis: string; // Market style description
   styleStats?: StyleStat[]; // Quantitative style analysis
   aiSummary: string; // General AI commentary
+  macro?: MacroData; // New: Macro economic context
 }
 
 export interface GroundingChunk {
