@@ -41,6 +41,16 @@ export interface MacroData {
   items: MacroItem[];
 }
 
+export interface FundFlowItem {
+  name: string;
+  amount: string; // e.g. "50.2亿"
+}
+
+export interface FundFlowData {
+  day3: FundFlowItem[]; // Recent 3 days
+  day5: FundFlowItem[]; // Recent 5 days
+}
+
 export interface MarketData {
   date: string;
   sentiment: MarketSentiment;
@@ -49,7 +59,8 @@ export interface MarketData {
   styleAnalysis: string; // Market style description
   styleStats?: StyleStat[]; // Quantitative style analysis
   aiSummary: string; // General AI commentary
-  macro?: MacroData; // New: Macro economic context
+  macro?: MacroData; // Macro economic context
+  fundFlows?: FundFlowData; // New: Capital Flow Data
 }
 
 export interface GroundingChunk {

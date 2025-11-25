@@ -7,6 +7,7 @@ import LadderWidget from './components/LadderWidget';
 import MarketStyle from './components/MarketStyle';
 import GroundingSources from './components/GroundingSources';
 import MacroOverview from './components/MacroOverview';
+import FundFlowWidget from './components/FundFlowWidget';
 import { Loader2, TrendingUp, RefreshCw, Key, Lock } from 'lucide-react';
 
 const App: React.FC = () => {
@@ -176,12 +177,12 @@ const App: React.FC = () => {
 
       {hasData && (
         <main className="grid grid-cols-1 lg:grid-cols-12 gap-6 auto-rows-[minmax(350px,auto)]">
-          {/* New: Macro Overview Row */}
+          {/* Row 1: Macro Overview */}
           <div className="lg:col-span-12">
             <MacroOverview data={data.macro} />
           </div>
 
-          {/* Top Row: Sentiment (Left, 4 cols) & Hot Sectors (Right, 8 cols) */}
+          {/* Row 2: Sentiment, Ladder, FundFlows (4-4-4) */}
           <div className="lg:col-span-4 lg:row-span-1">
             <SentimentGauge data={data.sentiment} />
           </div>
@@ -191,10 +192,15 @@ const App: React.FC = () => {
           </div>
 
           <div className="lg:col-span-4 lg:row-span-1">
+             <FundFlowWidget data={data.fundFlows} />
+          </div>
+
+          {/* Row 3: Hot Sectors (Full Width for details) */}
+          <div className="lg:col-span-12 min-h-[350px]">
              <HotSectors sectors={data.hotSectors} />
           </div>
 
-          {/* Bottom Row: AI Analysis & Style */}
+          {/* Row 4: AI Analysis & Style */}
           <div className="lg:col-span-12 min-h-[400px]">
             <MarketStyle 
               styleAnalysis={data.styleAnalysis} 

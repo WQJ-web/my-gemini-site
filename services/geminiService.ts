@@ -11,7 +11,6 @@ const getApiKey = (providedKey?: string): string => {
   }
   
   // Try Environment variables (Vite Standard)
-  // Fix: Removed process.env to prevent "Cannot find name 'process'" error during build
   return (import.meta as any).env?.VITE_API_KEY || '';
 };
 
@@ -59,6 +58,10 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
      - 搜索离岸人民币汇率 (USD/CNH)。
      - 简述宏观环境对A股今日的影响。
 
+  6. **主力资金流向趋势**：
+     - 搜索并统计 **A股近3日** 和 **近5日** 主力资金净流入最多的行业板块。
+     - 分别列出前3-5个板块名称及大致净流入金额（如“20亿”）。
+
   搜索完成后，请**严格**按照以下两个部分输出：
 
   **第一部分：JSON数据块**
@@ -76,11 +79,19 @@ export const fetchMarketReview = async (userApiKey?: string): Promise<APIRespons
       "sentimentDescription": "简短描述，如'放量大涨，情绪高潮'"
     },
     "macro": {
-        "summary": "一句话概括宏观影响，例如：美股大涨利好科技股，金价新高。",
+        "summary": "一句话概括宏观影响",
         "items": [
-            { "name": "纳斯达克", "price": "16300", "change": "+1.2%", "isUp": true },
-            { "name": "COMEX黄金", "price": "2350.5", "change": "+0.5%", "isUp": true },
-            { "name": "USD/CNH", "price": "7.25", "change": "-0.01%", "isUp": false }
+            { "name": "纳斯达克", "price": "16300", "change": "+1.2%", "isUp": true }
+        ]
+    },
+    "fundFlows": {
+        "day3": [
+            { "name": "半导体", "amount": "50亿" },
+            { "name": "证券", "amount": "30亿" }
+        ],
+        "day5": [
+             { "name": "半导体", "amount": "120亿" },
+             { "name": "计算机", "amount": "80亿" }
         ]
     },
     "hotSectors": [
